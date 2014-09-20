@@ -8,9 +8,6 @@ chrome.extension.sendMessage({}, function(response) {
 		console.log("Hello. This message was sent from scripts/inject.js");
 		// ----------------------------------------------------------
 
-
-		// MY CUSTOM SCRIPT
-
 		// load jquery
 		// var jq = document.createElement('script');
 		// jq.src = "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js";
@@ -36,7 +33,7 @@ chrome.extension.sendMessage({}, function(response) {
 
 
 			var prevAttr = "";
-				$('div#ID-tagTable div.ID-table tbody tr.CT_TABLE_ROW').each(function() {
+				jQuery('div#ID-tagTable div.ID-table tbody tr.CT_TABLE_ROW').each(function() {
 				var curAttr = jQuery(this).attr('tagGroup');
 				
 				if(curAttr != undefined && curAttr != prevAttr){
@@ -46,13 +43,13 @@ chrome.extension.sendMessage({}, function(response) {
 			  
 			});
 
-			// Toggle ROws
-
+			// Toggle Rows
 			jQuery('.toggle').click(function(){
 			var id = jQuery(this).attr('id');
 			jQuery('tr[tagGroup="'+id+'"]').toggle();
 			});
 
+			jQuery('tr[taggroup]').toggle();
 		}
 
 		var tableRedraw = function(){
