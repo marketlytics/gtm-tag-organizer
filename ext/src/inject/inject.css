@@ -2,12 +2,17 @@
  * Place your custom CSS styles here.
  **/
 .toggle  {
-	background-color: #4374e0;
 	font-size: 14px;
-	color: #fff;
+	font-weight: 700;
+	color: #555;
 	cursor: pointer;
+	border: 1px solid #efefef;
 }
 
 .toggle  td {
 	padding: 5px 0 5px 14px;
+}
+
+tr[taggroup="GA "] {
+	background-color: #f5f5f5;
 }
