@@ -1,3 +1,12 @@
 /**
  * Place your custom CSS styles here.
  **/
+.toggle  {
+	background-color: #4374e0;
+	font-size: 14px;
+	color: #fff;
+}
+
+.toggle  td {
+	padding: 5px 0 5px 14px;
+}

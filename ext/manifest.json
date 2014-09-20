@@ -1,5 +1,5 @@
 {
-  "name": "CHANGE THIS : Extension boilerplate",
+  "name": "GTM TAG ORGANIZER",
   "version": "0.0.1",
   "manifest_version": 2,
   "description": "This extension was created with the awesome extensionizr.com",
@@ -24,12 +24,12 @@
   },
   "permissions": [
     "contentSettings",
-    "https://www.google.com/tagmanager/web/#management/TagManagement/"
+    "https://www.google.com/tagmanager/web/"
   ],
   "content_scripts": [
     {
       "matches": [
-        "https://www.google.com/*"
+        "https://www.google.com/tagmanager/web/"
       ],
       "css": [
         "src/inject/inject.css"
@@ -37,10 +37,10 @@
     },
     {
       "matches": [
-        "https://www.google.com/*"
+        "https://www.google.com/tagmanager/web/"
       ],
       "js": [
-        "src/inject/inject.js"
+        "src/inject/jquery.min.js", "src/inject/inject.js"
       ]
     }
   ]

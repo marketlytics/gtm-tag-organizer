@@ -31,7 +31,7 @@ var gtmTableUpdate = function(){
 		var curAttr = jQuery(this).attr('tagGroup');
 		
 		if(curAttr != undefined && curAttr != prevAttr){
-			jQuery(this).before('<tr class="toggle" id="'+curAttr+'"><td>'+curAttr+'</td><td></td><td></td></tr>');
+			jQuery(this).before('<tr class="toggle" id="'+curAttr+'"><td>'+curAttr+'</td><td></td><td></td><td></td></tr>');
 			prevAttr = curAttr;
 		}
 	  
