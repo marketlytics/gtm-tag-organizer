@@ -15,33 +15,42 @@ chrome.extension.sendMessage({}, function(response) {
 
 		var gtmTableUpdate = function(){
 				
+			var prevAttr = "";
 
 			// parse and append tag
 			jQuery('div#ID-tagTable div.ID-table tbody tr.CT_TABLE_ROW').each(function(){
 				var tag = jQuery(this).find('td.CT_TABLE_CELL>div.ACTION-clickTag').text().split("-");
-				
+				var type = jQuery(this).find('td.CT_TABLE_CELL:nth-child(2)').text();
 				// tag[0] = (tag.length > 1) ? tag[0] : "Other";
 
 				//append tag to parent
 				if(tag.length > 1){
 					jQuery(this).attr('tagGroup', tag[0]);
-					// console.log(jQuery(this).parents('tr'));	
 				}
+
+				jQuery(this).attr('tagtype', type);
 				
+				// var organize == "custom";
+				// if(organize == "type"){
+				// 	var curAttr = jQuery(this).attr('tagtype');
+					
+				// 	if(curAttr != undefined && curAttr != prevAttr){
+				// 		jQuery(this).before('<tr class="toggle" id="'+curAttr+'"><td>'+curAttr+'</td><td></td><td></td><td></td></tr>');
+				// 		prevAttr = curAttr;
+				// 	}
+
+				// } else {
+					var curAttr = jQuery(this).attr('tagGroup');
+					
+					if(curAttr != undefined && curAttr != prevAttr){
+						jQuery(this).before('<tr class="toggle" id="'+curAttr+'"><td>'+curAttr+'</td><td></td><td></td><td></td></tr>');
+						prevAttr = curAttr;
+					// }
+				}
+
+
 			});
 
-
-
-			var prevAttr = "";
-				jQuery('div#ID-tagTable div.ID-table tbody tr.CT_TABLE_ROW').each(function() {
-				var curAttr = jQuery(this).attr('tagGroup');
-				
-				if(curAttr != undefined && curAttr != prevAttr){
-					jQuery(this).before('<tr class="toggle" id="'+curAttr+'"><td>'+curAttr+'</td><td></td><td></td><td></td></tr>');
-					prevAttr = curAttr;
-				}
-			  
-			});
 
 			// Toggle Rows
 			jQuery('.toggle').click(function(){
@@ -63,7 +72,6 @@ chrome.extension.sendMessage({}, function(response) {
 
 		tableRedraw();
 		gtmTableUpdate();
-		// MY CUSTOM SCRIPT
 
 	}
 	}, 10);

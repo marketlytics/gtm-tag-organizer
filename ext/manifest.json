@@ -24,6 +24,7 @@
   },
   "permissions": [
     "contentSettings",
+    "storage",
     "https://www.google.com/tagmanager/web/"
   ],
   "content_scripts": [
