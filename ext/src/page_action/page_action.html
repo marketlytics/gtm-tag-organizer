@@ -1,19 +1,24 @@
-<!doctype html>
-<style type="text/css">
-	#mainPopup {
-		padding: 10px;
-		height: 200px;
-		width: 400px;
-		font-family: Helvetica, Ubuntu, Arial, sans-serif;
-	}
-	h1 {
-		font-size: 2em;
-	}
-</style>
+<!DOCTYPE html>
+<html>
+<head><title>My Test Extension Options</title></head>
+<body>
 
-<div id="mainPopup">
-	<input type="checkbox">Use Separator Custom</input><br/>
-	<input type="text" value="-">Separator Value</input>
-<!-- <h1>Hello extensionizr!</h1>
-<p>To shut this popup down, edit the manifest file and remove the "default popup" key. To edit it, just edit ext/page_action/page_action.html. The CSS is there, too.</p> -->
-</div>
+Favorite color:
+<select id="color">
+ <option value="red">red</option>
+ <option value="green">green</option>
+ <option value="blue">blue</option>
+ <option value="yellow">yellow</option>
+</select>
+
+<label>
+  <input type="checkbox" id="like">
+  I like colors.
+</label>
+
+<div id="status"></div>
+<button id="save">Save</button>
+
+<script src="src/inject/options.js"></script>
+</body>
+</html>

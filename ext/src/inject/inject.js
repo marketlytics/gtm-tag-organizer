@@ -14,14 +14,19 @@ chrome.extension.sendMessage({}, function(response) {
 		// document.getElementsByTagName('head')[0].appendChild(jq);
 
 		var gtmTableUpdate = function(){
-				
+			var selectedOption = '';
+
 			var prevAttr = "";
 
 			// parse and append tag
 			jQuery('div#ID-tagTable div.ID-table tbody tr.CT_TABLE_ROW').each(function(){
+				chrome.storage.sync.get("option", function (obj) {
+					selectedOption = obj.option;
+				});
 				var tag = jQuery(this).find('td.CT_TABLE_CELL>div.ACTION-clickTag').text().split("-");
 				var type = jQuery(this).find('td.CT_TABLE_CELL:nth-child(2)').text();
 				// tag[0] = (tag.length > 1) ? tag[0] : "Other";
+				console.log(type, tag, "asdla");
 
 				//append tag to parent
 				if(tag.length > 1){
@@ -29,26 +34,25 @@ chrome.extension.sendMessage({}, function(response) {
 				}
 
 				jQuery(this).attr('tagtype', type);
-				
-				// var organize == "custom";
-				// if(organize == "type"){
-				// 	var curAttr = jQuery(this).attr('tagtype');
-					
-				// 	if(curAttr != undefined && curAttr != prevAttr){
-				// 		jQuery(this).before('<tr class="toggle" id="'+curAttr+'"><td>'+curAttr+'</td><td></td><td></td><td></td></tr>');
-				// 		prevAttr = curAttr;
-				// 	}
 
-				// } else {
+				console.log(selectedOption);
+				// var selectedOption = "type";
+				if(selectedOption == "type"){
+					var curAttr = jQuery(this).attr('tagtype');
+					console.log(selectedOption);
+					if(curAttr != undefined && curAttr != prevAttr){
+						jQuery(this).before('<tr class="toggle" id="'+curAttr+'"><td>'+curAttr+'</td><td></td><td></td><td></td></tr>');
+						prevAttr = curAttr;
+					}
+
+				} else {
 					var curAttr = jQuery(this).attr('tagGroup');
 					
 					if(curAttr != undefined && curAttr != prevAttr){
 						jQuery(this).before('<tr class="toggle" id="'+curAttr+'"><td>'+curAttr+'</td><td></td><td></td><td></td></tr>');
 						prevAttr = curAttr;
-					// }
+					}
 				}
-
-
 			});
 
 
@@ -76,4 +80,5 @@ chrome.extension.sendMessage({}, function(response) {
 	}
 	}, 10);
 });
+
 

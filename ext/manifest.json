@@ -41,7 +41,7 @@
         "https://www.google.com/tagmanager/web/"
       ],
       "js": [
-        "src/inject/jquery.min.js", "src/inject/inject.js"
+        "src/inject/jquery.min.js", "src/inject/inject.js", "src/inject/options.js"
       ]
     }
   ]
