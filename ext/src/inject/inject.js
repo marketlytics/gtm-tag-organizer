@@ -74,7 +74,7 @@ chrome.extension.sendMessage({}, function(response) {
 		var tableRedraw = function(){
 		jQuery('div.ID-table table.CT_TABLE tbody th').click(function(){
 			setTimeout(function(){
-			gtmTableUpdate(); tableRedraw();
+			callingBack(gtmTableUpdate); tableRedraw();
 			// console.log("code run");
 			}, 500);
 		});
