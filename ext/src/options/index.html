@@ -13,7 +13,17 @@
 		}
 
 		h4 {
-			margin: 20px 0 10px 0;
+			margin: 0 0 5px;
+		}
+
+		label {
+			display: block;
+			margin: 20px 0 5px;
+		}
+
+		#submit {
+			display: block;
+			margin-top: 20px;
 		}
 	</style>
 </head>
@@ -31,15 +41,19 @@
 <button id="save">Save</button> -->
 
 <div id="mainPopup">
-	<input type="checkbox">Use Separator Custom</input><br/>
-	<input type="text" value="-">Separator Value</input>
-	
+	<!-- <input type="checkbox">Use Separator Custom</input><br/> -->
 	<h4>Organize with:</h4>
 	<select id="organize">
 		<option selected disabled>Select option</option>
-		<option value="type">Type</option>
-		<option value="name">Name</option>
+		<option value="type" class="option">Type</option>
+		<option value="name" class="option">Name</option>
 	</select>
+	
+	<div id="separator">
+		<label>Separator Value</label>
+		<input type="text" id="customSeparator" value="-">
+	</div>
+	
 	<button id="submit">Submit</button>
 <!-- <h1>Hello extensionizr!</h1>
 <p>To shut this popup down, edit the manifest file and remove the "default popup" key. To edit it, just edit ext/page_action/page_action.html. The CSS is there, too.</p> -->
