@@ -33,6 +33,7 @@ chrome.extension.sendMessage({}, function(response) {
 			var gtmTableUpdate = function(selectedOption, selectedSeparator){
 
 			if(selectedOption == "type"){
+				// sort by Type before redrawing
 				jQuery('div#ID-tagTable div.ID-table tbody tr th.TARGET-1').click();
 			}				
 			// else if (selectedOption == "name"){
@@ -40,14 +41,14 @@ chrome.extension.sendMessage({}, function(response) {
 			// }
 
 			var prevAttr = "";
-
+			var tableRow = jQuery('div#ID-tagTable div.ID-table tbody tr.CT_TABLE_ROW');
 			// parse and append tag
-			jQuery('div#ID-tagTable div.ID-table tbody tr.CT_TABLE_ROW').each(function(){
 			
-				console.log(selectedOption);
+			
+				// console.log(selectedOption);
 				// var selectedOption = "type";
 				if(selectedOption == "type"){
-
+				tableRow.each(function(){
 					var type = jQuery(this).find('td.CT_TABLE_CELL:nth-child(2)').text();
 					// tag[0] = (tag.length > 1) ? tag[0] : "Other";
 					jQuery(this).attr('tagType', type);
@@ -57,8 +58,9 @@ chrome.extension.sendMessage({}, function(response) {
 						jQuery(this).before('<tr class="toggle" id="'+curAttr+'" toggletype="tagType"><td>'+curAttr+'</td><td></td><td></td><td></td></tr>');
 						prevAttr = curAttr;
 					}
-
+				});
 				} else if (selectedOption == "name") {
+				tableRow.each(function(){	
 					var tag = jQuery(this).find('td.CT_TABLE_CELL>div.ACTION-clickTag').text().split(selectedSeparator);
 					//append tag to parent
 					if(tag.length > 1){
@@ -69,8 +71,9 @@ chrome.extension.sendMessage({}, function(response) {
 						jQuery(this).before('<tr class="toggle" id="'+curAttr+'" toggletype="tagName"><td>'+curAttr+'</td><td></td><td></td><td></td></tr>');
 						prevAttr = curAttr;
 					}
+				});	
 				}
-			});
+			
 
 
 			// Toggle Rows
@@ -95,7 +98,7 @@ chrome.extension.sendMessage({}, function(response) {
 				gtmTableUpdate(selectedOption, selectedSeparator); 
 				tableRedraw();
 				// console.log("code run");
-			}, 500);
+			}, 200);
 		});
 		}
 

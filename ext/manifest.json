@@ -1,13 +1,13 @@
 {
-  "name": "GTM TAG ORGANIZER",
-  "version": "0.0.1",
+  "name": "GTM Tag Organizer",
+  "version": "0.5",
   "manifest_version": 2,
   "description": "This extension was created with the awesome extensionizr.com",
-  "homepage_url": "http://extensionizr.com",
+  "homepage_url": "http://marketlytics.com/playground/#gtmOrganizer",
   "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "16": "icons/GTM-logo16.png",
+    "48": "icons/GTM-logo48.png",
+    "128": "icons/GTM-logo128.png"
   },
   "default_locale": "en",
   "background": {
@@ -16,10 +16,10 @@
     ],
     "persistent": true
   },
-  "options_page": "src/options/index.html",
+  "options_page": "src/page_action/page_action.html",
   "page_action": {
-    "default_icon": "icons/icon19.png",
-    "default_title": "page action demo",
+    "default_icon": "icons/GTM-logo19.png",
+    "default_title": "GTM Tag Organizer",
     "default_popup": "src/page_action/page_action.html"
   },
   "permissions": [
