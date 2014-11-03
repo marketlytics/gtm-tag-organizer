@@ -4,7 +4,7 @@
   "version": "0.6",
   "manifest_version": 2,
   "description": "Extension to organize tags in Google Tag Manager container.",
-  "homepage_url": "https://github.com/marketlytics/gtm-tag-organizer",
+  "homepage_url": "http://marketlytics.com/playground/?utm_source=chrome&utm_medium=referral&utm_campaign=tagOrganize#gtmOrganizer",
   "icons": {
     "16": "icons/GTM-logo16.png",
     "48": "icons/GTM-logo48.png",
