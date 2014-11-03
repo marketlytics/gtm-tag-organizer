@@ -8,11 +8,6 @@ chrome.extension.sendMessage({}, function(response) {
 		// console.log("Hello. This message was sent from scripts/inject.js");
 		// ----------------------------------------------------------
 
-		// load jquery
-		// var jq = document.createElement('script');
-		// jq.src = "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js";
-		// document.getElementsByTagName('head')[0].appendChild(jq);
-
 		var selectedOption;
 		var selectedSeparator;
 
@@ -40,20 +35,17 @@ chrome.extension.sendMessage({}, function(response) {
 
 				// sort by Type before redrawing so the tags are ordered
 				jQuery('div#ID-tagTable div.ID-table tbody tr th.TARGET-1').click();
-			}				
-			// else if (selectedOption == "name"){
+			}			
+
+			// } else if (selectedOption == "name"){
 			// 	jQuery('div#ID-tagTable div.ID-table tbody tr th.TARGET-0').click();
 			// }
-
+									
 			var prevAttr = "";
-			var tableRow = jQuery('div#ID-tagTable div.ID-table tbody tr.CT_TABLE_ROW');
+			var tableRow = jQuery('div#ID-tagTable div.ID-table tbody tr.CT_TABLE_ROW');				
+			// console.log(selectedOption);				
+			if(selectedOption == "type"){									
 			
-			
-			
-				// console.log(selectedOption);
-				// var selectedOption = "type";
-			
-				if(selectedOption == "type"){
 				tableRow.each(function(){
 					var type = jQuery(this).find('td.CT_TABLE_CELL:nth-child(2)').text();					
 					jQuery(this).attr('tagType', type);
@@ -64,73 +56,104 @@ chrome.extension.sendMessage({}, function(response) {
 						prevAttr = curAttr;
 					}
 				});
-				} else if (selectedOption == "name") {
+
+			} else if (selectedOption == "name") {
 				tableRow.each(function(){	
 					var tag = jQuery(this).find('td.CT_TABLE_CELL>div.ACTION-clickTag').text().split(selectedSeparator);
-					//append tag to parent
+					
+					// if tag array doesnt have more than one item mark as other
 					tag[0] = (tag.length > 1) ? tag[0] : "Other";
-				
-					// if(tag.length > 1){
-						jQuery(this).attr('tagName', tag[0]);
-					// }
-				
+					
+					//append tag to parent					
+					jQuery(this).attr('tagName', tag[0]);
+					
 					var curAttr = jQuery(this).attr('tagName');
 					if(curAttr != undefined && curAttr != prevAttr){
 						jQuery(this).before('<tr class="toggle" id="'+curAttr+'" toggletype="tagName"><td>'+curAttr+'</td><td></td><td></td><td></td></tr>');
 						prevAttr = curAttr;
 					}
 				});	
-				}
+			}
 			
+			// //macrotable ID-macroTable future change for handling macro sorting
+			// var tableRowMacro = jQuery('div#ID-macroTable div.ID-table tbody tr.CT_TABLE_ROW');
+			// var prevMacro = "";
+			// tableRowMacro.each(function(){
+			// 	var type = jQuery(this).find('td.CT_TABLE_CELL:nth-child(2)').text();					
+			// 	jQuery(this).attr('tagType', type);
+
+			// 	var curAttr = jQuery(this).attr('tagType');
+			// 	if(curAttr != undefined && curAttr != prevMacro){
+			// 		jQuery(this).before('<tr class="toggle" id="'+curAttr+'" toggletype="tagType"><td>'+curAttr+'</td><td></td><td></td><td></td><td></td></tr>');
+			// 		prevMacro = curAttr;
+			// 	}
+			// });
 
 
 			// Toggle Rows
 			var toggleType;
 			jQuery('.toggle').click(function(){
-			var id = jQuery(this).attr('id');
-			toggleType = jQuery(this).attr('toggletype');
-						
-				jQuery('tr['+toggleType+'="'+id+'"]').toggle();	
+				var id = jQuery(this).attr('id');
+				toggleType = jQuery(this).attr('toggletype');
+							
+					jQuery('tr['+toggleType+'="'+id+'"]').toggle();	
 			});			
-			//jQuery('tr['toggleType']').toggle();
-			jQuery('tr[tagname]').hide();
-			jQuery('tr[tagtype]').hide();
-
-
+			
+			jQuery('tr[tagname]').toggle();
+			jQuery('tr[tagtype]').toggle();
 		}
 
-		var tableRedraw = function(){
-		jQuery('div.ID-table table.CT_TABLE tbody th').click(function(){
-			setTimeout(function(){
-				// re input data on table update 
-				gtmTableUpdate(selectedOption, selectedSeparator); 
-				tableRedraw();
-				// console.log("code run");
-			}, 200);
-		});
+		var tableRedraw = function(time){
+			jQuery('div.ID-table table.CT_TABLE tbody th').click(function(){
+				setTimeout(function(){
+
+					// re input data on table update 
+					// gtmTableUpdate(selectedOption, selectedSeparator);
+					// only redraw if custom attribute is missing 
+					if (jQuery('tr#ID-unusedId-row-0')[0].hasAttribute("tagtype") == false 
+	    			&& jQuery('tr#ID-unusedId-row-0')[0].hasAttribute("tagname") == false){    		
+	    			
+	    			callingBack(gtmTableUpdate);		    			
+	    		}    		     		
+					
+					tableRedraw();
+					// console.log("code run tableRedraw");
+
+				}, time);
+			});
 		}
 
-	// 
-	tableRedraw();
-	callingBack(gtmTableUpdate);
+	 
+		tableRedraw(500);
+		callingBack(gtmTableUpdate);
 
-	// on hash change wait for page to load before applying changes
-	var waitAndLoad = function(t){
-    setTimeout(function(){
-     callingBack(gtmTableUpdate);
-    }, t)
-  }
+		// on hash change wait for page to load before applying changes
+		var waitAndLoad = function(t){
+	    setTimeout(function(){
+	    	if (jQuery('tr#ID-unusedId-row-0')[0].hasAttribute("tagtype") == false 
+	    		&& jQuery('tr#ID-unusedId-row-0')[0].hasAttribute("tagname") == false){    		    		
+	    		tableRedraw(500);
+	    		callingBack(gtmTableUpdate);	
+	    		// console.log("hasAttribute force");    	
+	    	}    		
+	    }, t)
+	  }
 
-  var forceLoad = function(){
-    waitAndLoad(500);
-  }
-  // if hash changes #Container
-  window.onhashchange = function() {
-    forceLoad();
-  }
-  // document.onclick = function() {
-  //   forceLoad();
-  // }
+	  var forceLoad = function(){
+	    waitAndLoad(500);
+	    waitAndLoad(1500);    
+	    waitAndLoad(2500);
+	    waitAndLoad(5000);
+	  }
+	  // if hash changes #Container
+	  window.onhashchange = function() {
+	    forceLoad();
+	    // console.log("code run onhashchange");
+	  }
+	  document.onclick = function() {
+	    forceLoad();
+	  	// console.log("code run onclick");
+	  }
 
 	}
 	}, 10);
