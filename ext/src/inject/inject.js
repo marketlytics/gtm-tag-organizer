@@ -16,6 +16,7 @@ chrome.extension.sendMessage({}, function(response) {
 		var selectedOption;
 		var selectedSeparator;
 
+		// fetch extensions settings from chrome storage
 		var callingBack = function(callBack) {			
 			chrome.storage.sync.get(function (obj) {
 				selectedOption = obj.option;
@@ -31,9 +32,13 @@ chrome.extension.sendMessage({}, function(response) {
 		}
 
 			var gtmTableUpdate = function(selectedOption, selectedSeparator){
+			if (selectedOption == "disable"){
+				 return false;
+			}
 
 			if(selectedOption == "type"){
-				// sort by Type before redrawing
+
+				// sort by Type before redrawing so the tags are ordered
 				jQuery('div#ID-tagTable div.ID-table tbody tr th.TARGET-1').click();
 			}				
 			// else if (selectedOption == "name"){
@@ -42,15 +47,15 @@ chrome.extension.sendMessage({}, function(response) {
 
 			var prevAttr = "";
 			var tableRow = jQuery('div#ID-tagTable div.ID-table tbody tr.CT_TABLE_ROW');
-			// parse and append tag
+			
 			
 			
 				// console.log(selectedOption);
 				// var selectedOption = "type";
+			
 				if(selectedOption == "type"){
 				tableRow.each(function(){
-					var type = jQuery(this).find('td.CT_TABLE_CELL:nth-child(2)').text();
-					// tag[0] = (tag.length > 1) ? tag[0] : "Other";
+					var type = jQuery(this).find('td.CT_TABLE_CELL:nth-child(2)').text();					
 					jQuery(this).attr('tagType', type);
 
 					var curAttr = jQuery(this).attr('tagType');
@@ -63,9 +68,12 @@ chrome.extension.sendMessage({}, function(response) {
 				tableRow.each(function(){	
 					var tag = jQuery(this).find('td.CT_TABLE_CELL>div.ACTION-clickTag').text().split(selectedSeparator);
 					//append tag to parent
-					if(tag.length > 1){
+					tag[0] = (tag.length > 1) ? tag[0] : "Other";
+				
+					// if(tag.length > 1){
 						jQuery(this).attr('tagName', tag[0]);
-					}
+					// }
+				
 					var curAttr = jQuery(this).attr('tagName');
 					if(curAttr != undefined && curAttr != prevAttr){
 						jQuery(this).before('<tr class="toggle" id="'+curAttr+'" toggletype="tagName"><td>'+curAttr+'</td><td></td><td></td><td></td></tr>');

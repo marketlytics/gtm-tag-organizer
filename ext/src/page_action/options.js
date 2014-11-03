@@ -20,7 +20,7 @@ var settingValue = function() {
 	  selectedOption = obj.option;
 	  selectedSeparator = obj.separator;
 	  if(selectedOption == undefined) {
-	  	selectedOption = 'name';
+	  	selectedOption = 'type';
 	  }
 
 	  if(selectedSeparator == undefined) {
